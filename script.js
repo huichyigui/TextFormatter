@@ -62,10 +62,6 @@ formatBtn.addEventListener("click", () => {
   } else {
     let lines = rawText.split(/\s+|\n+/).filter((item) => item !== "");
 
-    lines = lines.filter(
-      (line) => /^\d+$/.test(line) || /^[bB]/.test(line) || /^[jJ]/.test(line)
-    );
-
     let filteredLines = [];
 
     switch (filterType.value) {
@@ -77,6 +73,12 @@ formatBtn.addEventListener("click", () => {
         break;
       case "F1":
         filteredLines = lines.filter((line) => /^\d+$/.test(line));
+        break;
+      case "AllBrands":
+        filteredLines = lines.filter(
+          (line) =>
+            /^\d+$/.test(line) || /^[bB]/.test(line) || /^[jJ]/.test(line)
+        );
         break;
       case "All":
         filteredLines = lines;
