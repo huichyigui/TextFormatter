@@ -38,18 +38,23 @@ itemsPerLine.addEventListener("keydown", (e) => {
   }
 });
 
-function displayFormattedOutput(items) {
+function getFormattedText(items, lineBreak = "<br>") {
   let perLine = parseInt(itemsPerLine.value) || 1;
   let result = "";
   for (let i = 0; i < items.length; i++) {
     result += items[i];
     if ((i + 1) % perLine === 0 && i !== items.length - 1) {
-      result += ",<br>";
+      result += "," + lineBreak;
     } else if (i !== items.length - 1) {
       result += ", ";
     }
   }
-  output.innerHTML = result.trim();
+
+  return result.trim();
+}
+
+function displayFormattedOutput(items) {
+  output.innerHTML = getFormattedText(items, "<br>");
 }
 
 formatBtn.addEventListener("click", () => {
@@ -113,8 +118,9 @@ formatBtn.addEventListener("click", () => {
 });
 
 copyBtn.addEventListener("click", () => {
+  const textToCopy = getFormattedText(originalItems, "\n");
   navigator.clipboard
-    .writeText(output.textContent)
+    .writeText(textToCopy)
     .then(() => {
       alert("Formatted text copied to clipboard!");
     })
